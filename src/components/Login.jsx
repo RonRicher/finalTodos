@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState({ username: "", password: "" });
 
@@ -26,11 +28,13 @@ const Login = () => {
   };
 
   const validateUser = async (user) => {
+    console.log("user: ", user);
     if (!user) return "User not found";
     console.log(user?.address?.geo?.lat);
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
+    setUser(user.id);
     navigate(`/`);
   };
 
