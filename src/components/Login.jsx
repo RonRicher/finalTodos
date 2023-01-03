@@ -16,7 +16,7 @@ const Login = () => {
     const response = await validateUser(await getUser(userInput.username));
     console.log(response);
   };
-
+//
   const getUser = async (username) => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users?username=${username}`
