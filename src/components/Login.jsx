@@ -16,7 +16,7 @@ const Login = () => {
     const response = await validateUser(await getUser(userInput.username));
     console.log(response);
   };
-//
+  //
   const getUser = async (username) => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users?username=${username}`
@@ -26,21 +26,11 @@ const Login = () => {
   };
 
   const validateUser = async (user) => {
-    console.log("userFromApi ", userFromApi);
+    if (!user) return "User not found";
+    console.log(user?.address?.geo?.lat);
+    console.log(userInput.password);
+    if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
-    if (!userFromApi) {
-      console.log("User not found");
-      return;
-    }
-
-    if (userFromApi?.address?.geo?.lat !== userInput.password) {
-      console.log("Wrong password");
-      console.log("password: ", userFromApi?.address?.geo?.lat);
-      return;
-    }
-
-    const { id, name, username } = userFromApi;
-    setUser({ id, name, username });
     navigate(`/`);
   };
 
