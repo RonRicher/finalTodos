@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+ 
   const [userInput, setUserInput] = useState({ username: "", password: "" });
-
+  const navigate = useNavigate();
   const handleChange = ({ target }) => {
     const { name, value } = target;
 
@@ -29,7 +31,8 @@ const Login = () => {
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
-    return "Logged in";
+   
+    navigate('/');
   };
 
   return (
