@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
- 
   const [userInput, setUserInput] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
+
   const handleChange = ({ target }) => {
     const { name, value } = target;
 
@@ -13,8 +13,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await validateUser(await getUser(userInput.username));
-    console.log(response);
+    setUserFromApi(await getUser(userInput.username));
+    await validateUser(userFromApi);
   };
 
   const getUser = async (username) => {
@@ -31,8 +31,7 @@ const Login = () => {
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
-   
-    navigate('/');
+    return "Logged in";
   };
 
   return (
