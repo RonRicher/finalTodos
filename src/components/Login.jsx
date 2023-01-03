@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
 
 const Login = () => {
-  const { setUser } = useUser();
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState({ username: "", password: "" });
-  const [userFromApi, setUserFromApi] = useState(null);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -16,8 +13,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserFromApi(await getUser(userInput.username));
-    await validateUser(userFromApi);
+    const response = await validateUser(await getUser(userInput.username));
+    console.log(response);
   };
 
   const getUser = async (username) => {
@@ -29,21 +26,11 @@ const Login = () => {
   };
 
   const validateUser = async (user) => {
-    console.log("userFromApi ", userFromApi);
+    if (!user) return "User not found";
+    console.log(user?.address?.geo?.lat);
+    console.log(userInput.password);
+    if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
-    if (!userFromApi) {
-      console.log("User not found");
-      return;
-    }
-
-    if (userFromApi?.address?.geo?.lat !== userInput.password) {
-      console.log("Wrong password");
-      console.log("password: ", userFromApi?.address?.geo?.lat);
-      return;
-    }
-
-    const { id, name, username } = userFromApi;
-    setUser({ id, name, username });
     navigate(`/`);
   };
 
