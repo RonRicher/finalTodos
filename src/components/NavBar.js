@@ -6,6 +6,7 @@ function NavBar() {
     return (
         <header id="navBar">
             <div>
+            <NavLink to='/Login'>LogIn</NavLink>
             <NavLink to='/Info'>Info</NavLink>
             <NavLink to="/Todos">Todos</NavLink>
             <NavLink to="/Posts">Posts</NavLink>

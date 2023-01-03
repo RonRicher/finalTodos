@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Albums from './Albums';
 import Info from './Info';
+import Login from './Login';
 import NavBar from './NavBar';
 import Posts from './Posts';
 import Todos from './Todos';
