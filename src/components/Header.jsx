@@ -6,13 +6,6 @@ import NavBar from './NavBar';
 import Posts from './Posts';
 import Todos from './Todos';
 
-
-
-
-
-
-
-
 function Header() {
 
     return (

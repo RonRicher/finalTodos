@@ -1,13 +1,17 @@
 import React, { Component, useEffect, useState } from 'react';
+import { useUser } from '../context/UserContext';
+
 
 function Info() {
   const [user, setUser] = useState({});
   // const {id} = 'getUser()';
-  const id = 1;
+  const {userId} = useUser();
+  console.log('new', userId)
+  // const id = 1;
   window.user = user
 
   const getUser = async () => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
     const data = await res.json();
     console.log(data)
     setUser(data)

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
 const Login = () => {
-  const { setUser } = useUser();
   const navigate = useNavigate();
+  const { setUserId } = useUser();
   const [userInput, setUserInput] = useState({ username: "", password: "" });
 
   const handleChange = ({ target }) => {
@@ -18,7 +18,7 @@ const Login = () => {
     const response = await validateUser(await getUser(userInput.username));
     console.log(response);
   };
-  //
+
   const getUser = async (username) => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users?username=${username}`
@@ -34,7 +34,7 @@ const Login = () => {
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
 
-    setUser(user.id);
+    setUserId(user.id);
     navigate(`/`);
   };
 

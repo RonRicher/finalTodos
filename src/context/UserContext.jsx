@@ -11,7 +11,7 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider({ children }) {
-  const [userId, setUserId] = useState({});
+  const [userId, setUserId] = useState(null);
 
   return (
     <UserContext.Provider value={{ userId, setUserId }}>
