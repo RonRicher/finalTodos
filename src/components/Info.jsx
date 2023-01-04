@@ -27,7 +27,7 @@ function Info() {
 
   return (
     <div className='main-content'>
- 
+
       <h1>id: {user?.id}</h1>
       <h2>name: {user?.name}</h2>
       <h2>username: {user?.username}</h2>

@@ -33,6 +33,7 @@ const Login = () => {
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
     setUserId(user.id)
+    localStorage.setItem('userId', user.id)
     navigate(`/`);
   };
 
