@@ -1,5 +1,4 @@
 import React, { Component, useEffect, useState } from 'react';
-import { useUser } from '../context/UserContext';
 import { getCookie } from './cookie';
 import Post from './Post';
 
