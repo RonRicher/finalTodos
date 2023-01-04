@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
 import { setCookie } from "../js/cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUserId } = useUser();
-  const [userInput, setUserInput] = useState({
-    username: "Bret",
-    password: "-37.3159",
-  });
+  const [loading, setLoading] = useState(false);
+  const [userInput, setUserInput] = useState({ username: "Bret", password: "-37.3159" });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -19,15 +15,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(loading){
+      return;
+    }
     const response = await validateUser(await getUser(userInput.username));
     console.log(response);
   };
 
   const getUser = async (username) => {
+    setLoading(true);
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users?username=${username}`
     );
     const data = await res.json();
+    setLoading(false);
     return data[0];
   };
 
@@ -37,7 +38,6 @@ const Login = () => {
     console.log(user?.address?.geo?.lat);
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
-    setUserId(user.id);
     localStorage.setItem("userId", user.id);
     setCookie("userId", user.id, 1);
     window.history.pushState(null, null, window.location.href);
@@ -56,14 +56,14 @@ const Login = () => {
               </div>
             </div>
 
-            <form className="col-md-6 right" onSubmit={handleSubmit}>
+            <form className={loading===false?"col-md-6 right":'col-md-6 input-loading'} onSubmit={handleSubmit}>
               <div className="input-box">
                 <header>Log In</header>
                 <div className="input-field">
                   <input
                     type="text"
                     name="username"
-                    className="input"
+                    className={loading===false?"input":'input wait'}
                     id="username"
                     onChange={handleChange}
                     value={userInput.username}
@@ -75,7 +75,7 @@ const Login = () => {
                   <input
                     type="password"
                     name="password"
-                    className="input"
+                    className={loading===false?"input":'input wait'}
                     id="password"
                     onChange={handleChange}
                     value={userInput.password}
@@ -84,7 +84,7 @@ const Login = () => {
                   <label htmlFor="password">Password</label>
                 </div>
                 <div className="input-field">
-                  <input type="submit" className="submit" value="Login" />
+                  <input type="submit" className={loading===false?"submit":'loading'} value={loading===false?"Login":'Loading...'} />
                 </div>
               </div>
             </form>
