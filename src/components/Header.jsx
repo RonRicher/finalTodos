@@ -20,7 +20,6 @@ function Header() {
                     <Route path='/' element={<h1>Home</h1>} />
                     <Route path='/login' element={<Login />} />
                     <Route path={`users/:id/`}>
-                    
                     <Route path='Info' element={<Info />} />
                     <Route path='Todos' element={<Todos />} />
                     <Route path='Posts' element={<Posts />} />
