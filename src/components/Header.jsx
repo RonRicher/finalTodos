@@ -9,7 +9,6 @@ import Todos from './Todos';
 
 function Header() {
 
-    const { userId } = useUser();
 
 
     return (

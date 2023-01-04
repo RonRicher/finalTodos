@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { deleteCookie, getCookie } from './cookie';
 
@@ -8,7 +8,7 @@ import { deleteCookie, getCookie } from './cookie';
 function NavBar() {
 
     const [userId, setUserId] = useState("");
-
+    const navigate = useNavigate()
     useEffect(() => {
         setUserId(getCookie('userId'))
     })
@@ -16,6 +16,8 @@ function NavBar() {
     function deleteUserId(){
         deleteCookie('userId');
         setUserId('');
+        // navigate('/')
+        // window.location.reload();
     }
 
     return (

@@ -1,11 +1,12 @@
 import React, { Component, useEffect, useState } from 'react';
 import { useUser } from '../context/UserContext';
+import { getCookie } from './cookie';
 import Post from './Post';
 
 function Posts() {
 
   const [posts, setPosts] = useState(null);
-  const { userId } = useUser();
+  const userId =   getCookie('userId');
 
   const getPosts = async () => {
     if (!posts) {
