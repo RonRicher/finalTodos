@@ -1,11 +1,13 @@
 import React, { Component, useEffect, useState } from 'react';
-import { useUser } from '../context/UserContext';
+import { useParams } from 'react-router-dom';
+import { getCookie } from './cookie';
 
 
 function Info() {
+  let userId =   getCookie('userId');
   const [user, setUser] = useState({});
   // const {id} = 'getUser()';
-  const {userId} = useUser();
+
   console.log('new', userId)
   // const id = 1;
   window.user = user

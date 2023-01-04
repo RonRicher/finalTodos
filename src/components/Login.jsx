@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import { getCookie, setCookie } from "./cookie";
 
 const Login = () => {
   const navigate = useNavigate();
   const {setUserId} = useUser()
-  const [userInput, setUserInput] = useState({ username: "", password: "" });
+  const [userInput, setUserInput] = useState({ username: "Bret", password: "-37.3159" });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -34,6 +35,7 @@ const Login = () => {
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
     setUserId(user.id)
     localStorage.setItem('userId', user.id)
+    setCookie('userId', user.id, 1);
     navigate(`/`);
   };
 
@@ -58,6 +60,7 @@ const Login = () => {
                     className="input"
                     id="username"
                     onChange={handleChange}
+                    value={userInput.username}
                     required
                   />
                   <label htmlFor="username">Username</label>
@@ -69,6 +72,7 @@ const Login = () => {
                     className="input"
                     id="password"
                     onChange={handleChange}
+                    value={userInput.password}
                     required
                   />
                   <label htmlFor="password">Password</label>
