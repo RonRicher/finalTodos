@@ -1,13 +1,17 @@
+import { useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
-import UserProvider from "./context/UserContext";
+import { searchPexels } from "./js/pexels";
 
 function App() {
+
+  useEffect(() => {
+    searchPexels()
+  })
+
   return (
     <div className="App">
-      <UserProvider>
-        <Header />
-      </UserProvider>
+      <Header />
     </div>
   );
 }

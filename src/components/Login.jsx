@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { getCookie, setCookie } from "./cookie";
+import { setCookie } from "../js/cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {setUserId} = useUser()
-  const [userInput, setUserInput] = useState({ username: "Bret", password: "-37.3159" });
+  const { setUserId } = useUser();
+  const [userInput, setUserInput] = useState({
+    username: "Bret",
+    password: "-37.3159",
+  });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -34,16 +37,16 @@ const Login = () => {
     console.log(user?.address?.geo?.lat);
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
-    setUserId(user.id)
-    localStorage.setItem('userId', user.id)
-    setCookie('userId', user.id, 1);
+    setUserId(user.id);
+    localStorage.setItem("userId", user.id);
+    setCookie("userId", user.id, 1);
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = window.history.go(1);
     navigate(`/`);
   };
 
   return (
     <>
-      <link rel="stylesheet" href="./style/signin.css" />
-
       <div className="wrapper">
         <div className="container main">
           <div className="row">

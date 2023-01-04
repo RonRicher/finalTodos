@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { getCookie } from "./cookie";
-
+import { getCookie } from "../js/cookie";
 
 function Info() {
   let userId = getCookie("userId");
