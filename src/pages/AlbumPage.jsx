@@ -4,7 +4,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { useStateRef } from "../hooks/useStateRef";
 
-function AlbumPage({ albumTitle }) {
+function AlbumPage() {
   const { albumId } = useParams();
   const [album, setAlbum] = useState([]);
   const [picId, setPicId, picRef] = useStateRef((albumId - 1) * 50 + 1);
@@ -19,12 +19,9 @@ function AlbumPage({ albumTitle }) {
         const res = await fetch(
           `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}&id=${picRef.current}`
         );
-
         if (!res.ok) throw new Error(res.message);
-
         const data = await res.json();
         const pic = await data[0];
-
         console.log(data[0]);
         //Increment the picture id counter by 1.
         await setPicId(picRef.current + 1);
@@ -42,8 +39,8 @@ function AlbumPage({ albumTitle }) {
   return (
     <>
       <div className="main-content">
-        <h1>{albumTitle}</h1>
-        <Splide
+        <h1>Album {albumId}</h1>
+        <Splide className="splide"
           onDrag={() => {
             getPics(4);
           }}

@@ -64,7 +64,7 @@ const Login = () => {
 
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = window.history.go(1);
-    navigate(`/`);
+    navigate(`/home/${userInput.username}`);
   };
 
   return (

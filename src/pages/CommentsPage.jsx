@@ -33,7 +33,6 @@ function Comments() {
   return (
     <div className="main-content">
       <h2>{postObj.title}</h2>
-
       <p>{postObj.body}</p>
       {comments &&
         comments.map((comment) => (

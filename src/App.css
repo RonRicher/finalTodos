@@ -48,8 +48,10 @@
 }
 
 
-.active {
+#navBar .active {
   cursor: pointer;
+  background-color: #ddd;
+  color: black;
 }
 
 .none {
@@ -112,7 +114,9 @@ a {
   color: initial;
 }
 
-
+.splide{
+  margin-top: 300px;
+}
 
 .sortButton {
   padding: 0.6em 2em;

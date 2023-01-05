@@ -22,12 +22,14 @@ function Header() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home/:userName" element={<Home />} />
+
             <Route path="/login" element={<Login />} />
             <Route path={`users/:id/`}>
               <Route path="Info" element={<Info />} />
               <Route path="Todos" element={<Todos />} />
               <Route path="Posts" element={<Posts />} />
-                <Route path="Posts/:postId" element={<Comments />} />
+              <Route path="Posts/:postId" element={<Comments />} />
               <Route path="Albums" element={<Albums />} />
               <Route path="Albums/:albumId" element={<AlbumPage />} />
             </Route>

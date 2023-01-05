@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React from 'react';
 
 
 function Post({ title, body, postId }) {

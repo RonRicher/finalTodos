@@ -27,7 +27,7 @@ function Albums() {
 
   return (
     <div className="main-content">
-      <h1 style={{marginTop: 50}}>Albums</h1>
+      <h1 style={{ marginTop: 50 }}>Albums</h1>
 
       {albums &&
         albums
