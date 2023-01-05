@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getCookie } from "../js/cookie";
+import { searchPexels } from "../js/pexels";
 import Album from "./Album";
 
 function Albums() {
@@ -10,13 +11,16 @@ function Albums() {
 
   const getAlbums = async () => {
     if (!albums) {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
-      );
-      const data = await res.json();
-      console.log(data);
-      setAlbums(data);
-      return data;
+      try {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
+        );
+        const data = await res.json();
+        console.log(data);
+        setAlbums(data);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 

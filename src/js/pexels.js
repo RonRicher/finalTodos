@@ -5,11 +5,14 @@ const client = createClient(
 );
 const query = "profile";
 
-export const searchPexels = () => {
-  let pexelPhotos = [];
-  client.photos.search({ query, per_page: 10 }).then((photos) => {
-    pexelPhotos = photos?.photos;
-    console.log("PEXELS ", pexelPhotos);
-    return pexelPhotos;
-  });
+export const searchPexels = async (callback) => {
+  try {
+    const { photos } = await client.photos.search({ query, per_page: 10 });
+
+    console.log("PEXELS ", photos);
+
+    callback(photos);
+  } catch (e) {
+    console.log(e);
+  }
 };

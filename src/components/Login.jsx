@@ -5,7 +5,10 @@ import { setCookie } from "../js/cookie";
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [userInput, setUserInput] = useState({ username: "Bret", password: "-37.3159" });
+  const [userInput, setUserInput] = useState({
+    username: "Bret",
+    password: "-37.3159",
+  });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -15,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(loading){
+    if (loading) {
       return;
     }
     const response = await validateUser(await getUser(userInput.username));
@@ -51,19 +54,22 @@ const Login = () => {
         <div className="container main">
           <div className="row">
             <div className="col-md-6 signin-image">
-              <div className="text">
-                <p>Welcome</p>
-              </div>
+              <div className="text"></div>
             </div>
 
-            <form className={loading===false?"col-md-6 right":'col-md-6 input-loading'} onSubmit={handleSubmit}>
+            <form
+              className={
+                loading === false ? "col-md-6 right" : "col-md-6 input-loading"
+              }
+              onSubmit={handleSubmit}
+            >
               <div className="input-box">
                 <header>Log In</header>
                 <div className="input-field">
                   <input
                     type="text"
                     name="username"
-                    className={loading===false?"input":'input wait'}
+                    className={loading === false ? "input" : "input wait"}
                     id="username"
                     onChange={handleChange}
                     value={userInput.username}
@@ -75,7 +81,7 @@ const Login = () => {
                   <input
                     type="password"
                     name="password"
-                    className={loading===false?"input":'input wait'}
+                    className={loading === false ? "input" : "input wait"}
                     id="password"
                     onChange={handleChange}
                     value={userInput.password}
@@ -84,7 +90,11 @@ const Login = () => {
                   <label htmlFor="password">Password</label>
                 </div>
                 <div className="input-field">
-                  <input type="submit" className={loading===false?"submit":'loading'} value={loading===false?"Login":'Loading...'} />
+                  <input
+                    type="submit"
+                    className={loading === false ? "submit" : "loading"}
+                    value={loading === false ? "Login" : "Loading..."}
+                  />
                 </div>
               </div>
             </form>
