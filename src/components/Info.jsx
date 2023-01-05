@@ -1,16 +1,28 @@
 import React, { Component, useEffect, useState } from "react";
+import { useStateRef } from "../hooks/useStateRef";
 import { getCookie } from "../js/cookie";
 
 function Info() {
   let userId = getCookie("userId");
-
-  const [user, setUser] = useState({});
-  const [className, setClassName] = useState("active");
-  window.user = user;
+  const [user, setUser, userRef] = useStateRef(null);
 
   useEffect(() => {
-    getUser();
-  }, []);
+    window.onbeforeunload = toLocalStorage;
+    const localUserInfo = localStorage.getItem('localUserInfo');
+    if (localUserInfo) {
+      setUser(JSON.parse(localUserInfo));
+      console.log(111111)
+    }
+    else {
+      getUser()
+      console.log(2222222)
+    }
+    return () => {
+      toLocalStorage();
+
+    }
+  }, [])
+
 
   const getUser = async () => {
     const res = await fetch(
@@ -23,17 +35,24 @@ function Info() {
     return data;
   };
 
+  function toLocalStorage() {
+    localStorage.setItem('localUserInfo', JSON.stringify(userRef.current));
+  }
+
   return (
-    <div className="main-content">
-      <div className="info">
-        <div className="inside-info">
+    <div className='main-content'>
+      <div className='info'>
+        <div className='inside-info'>
+          <img className='profile-pic'
+            src='https://images.pexels.com/photos/220454/pexels-photo-220454.jpeg?auto=compress&cs=tinysrgb&h=200'
+            alt='' />
           <h1>id: {user?.id}</h1>
-          <h2>name: {user?.name}</h2>
-          <h2>username: {user?.username}</h2>
-          <h2>email: {user?.email}</h2>
-          <h2>address: {user?.address?.city}</h2>
-          <h2>phone: {user?.phone}</h2>
-          <h2>company: {user?.company?.name}</h2>
+          <h2>Name: {user?.name}</h2>
+          <h2>Username: {user?.username}</h2>
+          <h2>Email: {user?.email}</h2>
+          <h2>Address: {user?.address?.city}</h2>
+          <h2>Phone: {user?.phone}</h2>
+          <h2>Company: {user?.company?.name}</h2>
         </div>
       </div>
     </div>

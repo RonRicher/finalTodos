@@ -8,7 +8,7 @@ function Comments() {
   const navigate = useNavigate();
 
   const [comments, setComments] = useState(null);
-  const { id } = useParams();
+  const { postId } = useParams();
 
   useEffect(() => {
     getComments();
@@ -18,7 +18,7 @@ function Comments() {
     if (!comments) {
       try {
         const res = await fetch(
-          `https://jsonplaceholder.typicode.com/comments?postId=${id}`
+          `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
         );
         if (!res.ok) throw new Error(res.message);
 
@@ -33,7 +33,7 @@ function Comments() {
   return (
     <div className="main-content">
       <h2>{postObj.title}</h2>
-      {/* <h3>{postObj.postId}</h3> */}
+
       <p>{postObj.body}</p>
       {comments &&
         comments.map((comment) => (
@@ -42,7 +42,7 @@ function Comments() {
             <p>{comment.body}</p>
           </div>
         ))}
-      <button onClick={() => navigate(`/Users/${id}/Posts`)}>go back</button>
+      <button onClick={() => navigate(`/Users/${postId}/Posts`)}>go back</button>
     </div>
   );
 }

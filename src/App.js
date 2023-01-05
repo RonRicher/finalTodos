@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-      <PostProvider>
-      <Header />
-      </PostProvider >
+        <PostProvider>
+          <Header />
+        </PostProvider >
       </UserProvider>
     </div>
   );

@@ -4,9 +4,9 @@ import { usePost } from '../context/PostContext';
 
 function Post({ title, body, postId }) {
 
-    const {setPostObj} = usePost();
-    setPostObj({title: title,
-        body: body, postId: postId})
+    const { setPostObj } = usePost();
+
+
 
 
     return (
@@ -14,9 +14,9 @@ function Post({ title, body, postId }) {
             <h2>{title}</h2>
             <h3>{postId}</h3>
             <p>{body}</p>
-                </div>
+        </div>
 
-                );
+    );
 }
 
 export default Post;
