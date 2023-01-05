@@ -1,13 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
-import { usePost } from '../context/PostContext';
 
 
 function Post({ title, body, postId }) {
-
-    const { setPostObj } = usePost();
-
-
-
 
     return (
         <div className='main-content'>

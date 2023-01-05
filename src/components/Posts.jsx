@@ -35,7 +35,7 @@ function Posts() {
 
   return (
     <div className="main-content">
-      <h1>Posts</h1>
+      <h1 style={{marginTop: 50}}>Posts</h1>
       
       {posts &&
         posts.map((post, index) => (

@@ -6,7 +6,9 @@ const Album = ({ albumTitle }) => {
 
   return (
     <div className="Album">
-      <h2>{albumTitle}</h2>
+      <br />
+      <h3 className='albumLink'>{albumTitle}</h3>
+      <br />
     </div>
   );
 };

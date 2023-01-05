@@ -77,7 +77,7 @@ function Todos() {
 
     return (
         <div className='main-content'>
-            <h1>Todos</h1>
+            <h1 style={{marginTop: 50}}>Todos</h1>
             <button className='sortButton' onClick={sortByAB}>sort by AB</button>
             <button className='sortButton' onClick={randomSort}>sort randomly</button>
             <button className='sortButton' onClick={sortByCompleted}>sort by completed</button>
