@@ -5,31 +5,44 @@ import "@splidejs/react-splide/css";
 import { useStateRef } from "../hooks/useStateRef";
 
 function AlbumPage({ albumTitle }) {
-  const { AlbumId } = useParams();
-  const [album, setAlbum] = useState([]);
-  const [picId, setPicId, picRef] = useStateRef((AlbumId - 1) * 50 + 1);
+  const { albumId } = useParams();
+  // const [album, setAlbum] = useState([]);
+
+  const [picId, setPicId, picIdRef] = useStateRef((albumId - 1) * 50 + 1);
+  const [album, setAlbum, albumRef] = useStateRef(null);
 
   const getPics = async (counter = 4) => {
-    const limit = 50 * AlbumId;
+    const limit = 50 * albumId;
 
-    //Fetch 8 requests by default.
-    for (let i = 0; i < counter && picRef.current <= limit; i++) {
+    //Fetch 8 requests by default(counter argument).
+    for (let i = 0; i < counter && picIdRef.current <= limit; i++) {
       try {
-        const res = await fetch(
-          `https://jsonplaceholder.typicode.com/photos?albumId=${AlbumId}&id=${picRef.current}`
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}&id=${picIdRef.current}`
         );
 
-        if (!res.ok) throw new Error(res.message);
+        //Check if the response is json type object.
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson ? await response.json() : null;
 
-        const data = await res.json();
+        // check for error response
+        if (!response.ok) {
+          // get error message from body or default to response status
+          const error = (data && data.message) || response.status;
+          throw new Error(error);
+        }
+
         const pic = await data[0];
 
         console.log(data[0]);
         //Increment the picture id counter by 1.
-        await setPicId(picRef.current + 1);
-        setAlbum((prevPics) => [...prevPics, pic]);
+        await setPicId(picIdRef.current + 1);
+        console.log("albumRef.current ", albumRef.current);
+        setAlbum(pic);
       } catch (e) {
-        console.log(e);
+        console.log("There was an error! ", e);
       }
     }
   };
@@ -38,14 +51,17 @@ function AlbumPage({ albumTitle }) {
     getPics();
 
     //Retrieve album from local storage.
-    const lsAlbum = JSON.parse(localStorage.getItem("album"));
-    if (lsAlbum) {
+    const lsAlbum = JSON.parse(localStorage.getItem("album" + albumId));
+    const pId = JSON.parse(localStorage.getItem("picId" + albumId));
+    if (lsAlbum?.length && pId) {
       setAlbum(lsAlbum);
+      setPicId(pId);
     }
 
     return () => {
       //Save album to local storage.
-      localStorage.setItem("album", JSON.stringify(album));
+      localStorage.setItem("album" + albumId, JSON.stringify(albumRef.current));
+      localStorage.setItem("picId" + albumId, JSON.stringify(picIdRef.current));
     };
   }, []);
 

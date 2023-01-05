@@ -12,14 +12,12 @@ import Post from "./Post";
 import Comments from "../pages/CommentsPage";
 import Home from "./Home";
 
-
 function Header() {
-
-    const userId = getCookie('userId');
-    const {userNum} = useUser()
+  const userId = getCookie("userId");
+  const { userNum } = useUser();
   return (
     <>
-      {(userId && userNum) ? (
+      {userId && userNum ? (
         <>
           <NavBar />
           <Routes>
@@ -29,17 +27,17 @@ function Header() {
               <Route path="Info" element={<Info />} />
               <Route path="Todos" element={<Todos />} />
               <Route path="Posts" element={<Posts />} />
-                <Route path="Posts/:id" element={<Comments />} />
+              <Route path="Posts/:id" element={<Comments />} />
               <Route path="Albums" element={<Albums />} />
-              <Route path="Albums/:AlbumId" element={<AlbumPage />} />
+              <Route path="Albums/:albumId" element={<AlbumPage />} />
             </Route>
           </Routes>
         </>
       ) : (
-        <> 
-                <Routes>
+        <>
+          <Routes>
             <Route path="*" element={<Login />} />
-            </Routes>
+          </Routes>
         </>
       )}
     </>
