@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { useStateRef } from "../hooks/useStateRef";
 import { getCookie } from "../js/cookie";
-import { searchPexels } from "../js/pexels";
 
 function Info() {
   let userId = getCookie("userId");
@@ -12,9 +11,11 @@ function Info() {
     const localUserInfo = localStorage.getItem('localUserInfo');
     if (localUserInfo) {
       setUser(JSON.parse(localUserInfo));
+      console.log(111111)
     }
     else {
       getUser()
+      console.log(2222222)
     }
     return () => {
       toLocalStorage();
@@ -27,13 +28,15 @@ function Info() {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users/${userId}`
     );
+    if (!res.ok) throw new Error(res.message);
+
     const data = await res.json();
     setUser(data);
     return data;
   };
 
   function toLocalStorage() {
-    localStorage.setItem('info', JSON.stringify(userRef.current));
+    localStorage.setItem('localUserInfo', JSON.stringify(userRef.current));
   }
 
   return (

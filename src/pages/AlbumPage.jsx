@@ -1,32 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCookie } from "../js/cookie";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import { useStateRef } from "../hooks/useStateRef";
 
 function AlbumPage({ albumTitle }) {
-  const [album, setAlbum] = useState(null);
-  const userId = getCookie("userId");
-  const { id } = useParams();
+  const { AlbumId } = useParams();
+  const [album, setAlbum] = useState([]);
+  const [picId, setPicId, picRef] = useStateRef((AlbumId - 1) * 50 + 1);
 
-  const getAlbum = async () => {
-    console.log("album id: ", id);
-    console.log("Album: ", album);
+  const getPics = async (counter = 4) => {
+    const limit = 50 * AlbumId;
 
-    if (!album) {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/photos?albumId=${id}`
-      );
-      const data = await res.json();
-      setAlbum(data);
-      console.log("getAlbum() ", data);
+    //Fetch 8 requests by default.
+    for (let i = 0; i < counter && picRef.current <= limit; i++) {
+      try {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/photos?albumId=${AlbumId}&id=${picRef.current}`
+        );
 
-      return data;
+        if (!res.ok) throw new Error(res.message);
+
+        const data = await res.json();
+        const pic = await data[0];
+
+        console.log(data[0]);
+        //Increment the picture id counter by 1.
+        await setPicId(picRef.current + 1);
+        setAlbum((prevPics) => [...prevPics, pic]);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   useEffect(() => {
-    getAlbum();
+    getPics();
+
+    //Retrieve album from local storage.
+    const lsAlbum = JSON.parse(localStorage.getItem("album"));
+    if (lsAlbum) {
+      setAlbum(lsAlbum);
+    }
+
+    return () => {
+      //Save album to local storage.
+      localStorage.setItem("album", JSON.stringify(album));
+    };
   }, []);
 
   return (
@@ -34,10 +54,16 @@ function AlbumPage({ albumTitle }) {
       <div className="main-content">
         <h1>{albumTitle}</h1>
         <Splide
+          onDrag={() => {
+            getPics(4);
+          }}
+          onMoved={() => {
+            getPics(4);
+          }}
           aria-labelledby="carousel-heading"
           options={{
             perPage: 4,
-            arrows: false,
+            arrows: true,
             pagination: false,
             drag: "free",
             gap: "5rem",
@@ -45,7 +71,10 @@ function AlbumPage({ albumTitle }) {
         >
           {album &&
             album.map((pic) => (
-              <SplideSlide className="splide-item">
+              <SplideSlide
+                key={Math.random() * Number.MAX_SAFE_INTEGER}
+                className="splide-item"
+              >
                 <img
                   key={Math.random()}
                   className="album-pic"

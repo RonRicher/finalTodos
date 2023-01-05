@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
 import { getCookie } from "../js/cookie";
-import { searchPexels } from "../js/pexels";
 
 function Home() {
   let userId = getCookie("userId");
@@ -8,7 +7,6 @@ function Home() {
 
   const [user, setUser] = useState({});
   const [className, setClassName] = useState('active');
-  const profilePic = searchPexels();
   window.user = user;
 
   useEffect(() => {
@@ -19,6 +17,8 @@ function Home() {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users/${userId}`
     );
+    if (!res.ok) throw new Error(res.message);
+
     const data = await res.json();
     setUser(data);
     return data;

@@ -29,9 +29,9 @@ function Header() {
               <Route path="Info" element={<Info />} />
               <Route path="Todos" element={<Todos />} />
               <Route path="Posts" element={<Posts />} />
-                <Route path="Posts/:id" element={<Comments />} />
+                <Route path="Posts/:postId" element={<Comments />} />
               <Route path="Albums" element={<Albums />} />
-              <Route path="Albums/:id" element={<AlbumPage />} />
+              <Route path="Albums/:AlbumId" element={<AlbumPage />} />
             </Route>
           </Routes>
         </>

@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useRef, useState } from 'react';
-import { useStateRef } from '../hooks/useStateRef';
+import React, { Component, useEffect, useRef, useState } from "react";
+import { useStateRef } from "../hooks/useStateRef";
 import { getCookie } from "../js/cookie";
-
 
 function Todos() {
     const [todos, setTodos, todosRef] = useStateRef(null);
@@ -18,7 +17,6 @@ function Todos() {
         }
         return () => {
             toLocalStorage();
-
         }
     }, [])
 
@@ -68,7 +66,7 @@ function Todos() {
     function sortByAB() {
         const todosArr = [...todos];
         todosArr.sort((a, b) => a.title.localeCompare(b.title));
-        setTodos(todosArr)
+        setTodos(todosArr);
     }
 
     function randomSort() {
