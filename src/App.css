@@ -32,6 +32,11 @@
   padding: 2%;
 }
 
+.album {
+  margin: 40px 0;
+  background-color: #7aa4ff42;
+}
+
 .album-page {
   position: relative;
   top: 60px;
@@ -45,7 +50,6 @@
 .splide-item > img {
   margin-bottom: 20px;
 }
-
 
 #navBar .active {
   cursor: pointer;
@@ -123,7 +127,7 @@ a {
   color: initial;
 }
 
-.splide{
+.splide {
   margin-top: 300px;
 }
 
@@ -203,9 +207,6 @@ a {
   border-radius: 50%;
   margin: 30px auto;
 }
-
-
-
 
 @media only screen and (max-width: 600px) {
   #navBar a {

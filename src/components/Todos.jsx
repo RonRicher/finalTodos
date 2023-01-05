@@ -19,8 +19,23 @@ function Todos() {
     };
   }, []);
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const deleteTodo = async (id) => {
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (res.ok) {
+        setTodos(todos.filter((todo) => todo.id !== id));
+      } else {
+        throw new Error(res.message);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getTodos = async () => {
@@ -44,10 +59,13 @@ function Todos() {
 
   function changeClassName(e) {
     const todosArr = [...todos];
-    todosArr[e.target.id].completed === true
-      ? (todosArr[e.target.id].completed = false)
-      : (todosArr[e.target.id].completed = true);
-    setTodos(todosArr);
+
+    if (todosArr[e.target.id]) {
+      todosArr[e.target.id].completed === true
+        ? (todosArr[e.target.id].completed = false)
+        : (todosArr[e.target.id].completed = true);
+      setTodos(todosArr);
+    }
   }
 
   function sortByCompleted() {
@@ -81,7 +99,7 @@ function Todos() {
 
   return (
     <div className="main-content">
-      <h1 style={{marginTop: 50}}>Todos</h1>
+      <h1 style={{ marginTop: 50 }}>Todos</h1>
       <button className="sortButton" onClick={sortByAB}>
         sort by AB
       </button>

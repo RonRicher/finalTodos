@@ -1,15 +1,13 @@
 import React from "react";
 
 const Album = ({ albumTitle }) => {
-
   return (
-    <div className="Album">
+    <div className="album">
       <br />
-      <h3 className='albumLink'>{albumTitle}</h3>
+      <h3>{albumTitle}</h3>
       <br />
     </div>
   );
-
 };
 
 export default Album;
