@@ -32,11 +32,11 @@ function Comments() {
 
   return (
     <div className="main-content">
-      <h2>{postObj.title}</h2>
+      <h2 style={{marginTop: 50}}>{postObj.title}</h2>
       <p>{postObj.body}</p>
       {comments &&
         comments.map((comment) => (
-          <div key={comment.id}>
+          <div className="comment" key={comment.id}>
             <h6>{comment.name}</h6>
             <p>{comment.body}</p>
           </div>

@@ -19,6 +19,7 @@ function Todos() {
     };
   }, []);
 
+<<<<<<< HEAD
   const deleteTodo = async (id) => {
     try {
       const res = await fetch(
@@ -37,6 +38,8 @@ function Todos() {
       console.log(e);
     }
   };
+=======
+>>>>>>> eea739e26fae6f31d23223e350af62a429ae16ca
 
   const getTodos = async () => {
     try {
@@ -57,10 +60,35 @@ function Todos() {
     localStorage.setItem("todos", JSON.stringify(todosRef.current));
   }
 
+  const deleteTodo = async (id) => {
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        {
+          method: 'DELETE'
+        }
+      );
+      if (res.ok) {
+        setTodos(todos.filter((todo) => todo.id !== id));
+      } else {
+        throw new Error(res.message);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+
   function changeClassName(e) {
     const todosArr = [...todos];
+<<<<<<< HEAD
 
     if (todosArr[e.target.id]) {
+=======
+    if (todos[e.target.id]) {
+>>>>>>> eea739e26fae6f31d23223e350af62a429ae16ca
       todosArr[e.target.id].completed === true
         ? (todosArr[e.target.id].completed = false)
         : (todosArr[e.target.id].completed = true);
@@ -99,7 +127,11 @@ function Todos() {
 
   return (
     <div className="main-content">
+<<<<<<< HEAD
       <h1 style={{ marginTop: 50 }}>Todos</h1>
+=======
+      <h1 style={{ margin: 50 }}>Todos</h1>
+>>>>>>> eea739e26fae6f31d23223e350af62a429ae16ca
       <button className="sortButton" onClick={sortByAB}>
         sort by AB
       </button>
