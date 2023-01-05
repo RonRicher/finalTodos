@@ -19,7 +19,6 @@ function Todos() {
     };
   }, []);
 
-
   const getTodos = async () => {
     try {
       if (!todos) {
@@ -44,7 +43,7 @@ function Todos() {
       const res = await fetch(
         `https://jsonplaceholder.typicode.com/todos/${id}`,
         {
-          method: 'DELETE'
+          method: "DELETE",
         }
       );
       if (res.ok) {
@@ -54,11 +53,9 @@ function Todos() {
       }
       console.log(res);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-
-  }
-
+  };
 
   function changeClassName(e) {
     const todosArr = [...todos];

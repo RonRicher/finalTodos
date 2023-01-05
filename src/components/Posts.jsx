@@ -1,13 +1,13 @@
-import React, { Component, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { usePost } from '../context/PostContext';
-import { getCookie }  from "../js/cookie";
-import Post from './Post';
+import React, { Component, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { usePost } from "../context/PostContext";
+import { getCookie } from "../js/cookie";
+import Post from "./Post";
 
 function Posts() {
   const [posts, setPosts] = useState(null);
   const userId = getCookie("userId");
-  const { setPostObj } = usePost()
+  const { setPostObj } = usePost();
 
   const getPosts = async () => {
     if (!posts) {
@@ -26,23 +26,32 @@ function Posts() {
     getPosts();
   }, []);
 
-
-  function changeContext(index){
+  function changeContext(index) {
     setPostObj({
       title: posts[index].title,
-      body: posts[index].body, postId: posts[index].postId})
+      body: posts[index].body,
+      postId: posts[index].postId,
+    });
   }
 
   return (
     <div className="main-content">
-      <h1 style={{marginTop: 50}}>Posts</h1>
-      
+      <h1 style={{ marginTop: 50 }}>Posts</h1>
+
       {posts &&
         posts.map((post, index) => (
-          <NavLink onClick={() =>changeContext(index)} key={post.id} to={`${post.id}`}>
-              <Post key={index} title={post.title} body={post.body} postId={post.id}/>
-            </NavLink>
-
+          <NavLink
+            onClick={() => changeContext(index)}
+            key={post.id}
+            to={`${post.id}`}
+          >
+            <Post
+              key={index}
+              title={post.title}
+              body={post.body}
+              postId={post.id}
+            />
+          </NavLink>
         ))}
     </div>
   );

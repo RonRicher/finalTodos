@@ -2,9 +2,6 @@
   font-family:monospace;
 } */
 
-
-
-
 #navBar {
   display: flex;
   justify-content: space-between;
@@ -39,16 +36,14 @@
   padding: 2%;
 }
 
-.main-content .post,  .main-content .comment  {
+.main-content .post,
+.main-content .comment {
   background-color: #7aa4ff42;
   margin: 0 auto;
   margin-bottom: 20px;
   border-radius: 10px;
   max-width: 70%;
-
 }
-
-
 
 .album-page {
   position: relative;
@@ -63,7 +58,6 @@
 .splide-item > img {
   margin-bottom: 20px;
 }
-
 
 #navBar .active {
   cursor: pointer;
@@ -124,7 +118,7 @@
   justify-content: "center";
 }
 
-.todo:hover{
+.todo:hover {
   background-color: rgba(46, 208, 28, 0.3);
 }
 
@@ -136,7 +130,7 @@
   cursor: pointer;
 }
 
-.todo-completed:hover{
+.todo-completed:hover {
   background-color: rgba(46, 208, 28, 0.379);
 }
 
@@ -153,7 +147,7 @@ a {
   color: initial;
 }
 
-.splide{
+.splide {
   margin-top: 300px;
 }
 
@@ -233,9 +227,6 @@ a {
   border-radius: 50%;
   margin: 30px auto;
 }
-
-
-
 
 @media only screen and (max-width: 600px) {
   #navBar a {
