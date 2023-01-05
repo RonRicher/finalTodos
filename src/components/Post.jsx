@@ -1,39 +1,22 @@
 import React, { Component, useEffect, useState } from 'react';
+import { usePost } from '../context/PostContext';
 
 
 function Post({ title, body, postId }) {
 
-    const [comments, setComments] = useState(null);
-
-
-    const getComments = async () => {
-        if (!comments) {
-            const res = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
-            const data = await res.json();
-            setComments(data)
-            console.log(data)
-            return data;
-        }
-
-    }
-
-    useEffect(() => { getComments() }
-        , [])
-
-
-
+    const {setPostObj} = usePost();
+    setPostObj({title: title,
+        body: body, postId: postId})
 
 
     return (
-    <div className='main-content'>
-        <h2>{title}</h2>
-        <h3>{postId}</h3>
-        <p>{body}</p>
+        <div className='main-content'>
+            <h2>{title}</h2>
+            <h3>{postId}</h3>
+            <p>{body}</p>
+                </div>
 
-        {comments && comments.map(comment => <div><h6>{comment.name}</h6><p>{comment.body}</p></div>)}
-        {/* <p>{comments?.name}</p>
-        <p>{comments?.body}</p> */}
-    </div>);
+                );
 }
 
 export default Post;

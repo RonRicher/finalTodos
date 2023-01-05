@@ -1,42 +1,49 @@
-import { Route, Routes } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
-import Albums from './Albums';
-import Info from './Info';
-import Login from './Login';
-import NavBar from './NavBar';
-import Posts from './Posts';
-import Todos from './Todos';
+import { Route, Routes } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import Albums from "./Albums";
+import Info from "./Info";
+import Login from "./Login";
+import NavBar from "./NavBar";
+import Posts from "./Posts";
+import Todos from "./Todos";
+import AlbumPage from "../pages/AlbumPage";
+import { getCookie } from "../js/cookie";
+import Post from "./Post";
+import Comments from "../pages/CommentsPage";
+import Home from "./Home";
+
 
 function Header() {
 
-
-
-    return (
+    const userId = getCookie('userId');
+    const {userNum} = useUser()
+  return (
+    <>
+      {(userId && userNum) ? (
         <>
-            {true ? (
-            <>
-                <NavBar />
-                <Routes>
-                    <Route path='/' element={<h1>Home</h1>} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path={`users/:id/`}>
-                    <Route path='Info' element={<Info />} />
-                    <Route path='Todos' element={<Todos />} />
-                    <Route path='Posts' element={<Posts />} />
-                    <Route path='Albums' element={<Albums />} />
-                    </Route>
-                </Routes>
-            </>
-            ) : (
-            <>
-                <h1>dddddddd</h1>
-
-            </>
-            )}
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path={`users/:id/`}>
+              <Route path="Info" element={<Info />} />
+              <Route path="Todos" element={<Todos />} />
+              <Route path="Posts" element={<Posts />} />
+                <Route path="Posts/:id" element={<Comments />} />
+              <Route path="Albums" element={<Albums />} />
+              <Route path="Albums/:id" element={<AlbumPage />} />
+            </Route>
+          </Routes>
         </>
-
-    )
-
+      ) : (
+        <> 
+                <Routes>
+            <Route path="*" element={<Login />} />
+            </Routes>
+        </>
+      )}
+    </>
+  );
 }
 
 export default Header;

@@ -33,6 +33,21 @@
   padding: 2%;
 }
 
+.album-page {
+  position: relative;
+  top: 60px;
+  width: 100%;
+}
+
+.album-pic {
+  border-radius: 16px;
+}
+
+.splide-item > img {
+  margin-bottom: 20px;
+}
+
+
 .active {
   cursor: pointer;
 }
@@ -75,4 +90,13 @@
   margin-top: 15px;
   justify-content: 'center';
   cursor: pointer;
+}
+
+a {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  display: block;
+  text-decoration: none;
+  color: initial;
 }

@@ -1,54 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useUser } from "../context/UserContext";
-import { getCookie, setCookie } from "./cookie";
+import { setCookie } from "../js/cookie";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
+  const {setUserNum} = useUser();
   const navigate = useNavigate();
-  // const {setUserId} = useUser();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({ username: "Bret", password: "-37.3159" });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-
     setUserInput((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(loading){
+    if (loading) {
       return;
     }
     const response = await validateUser(await getUser(userInput.username));
     console.log(response);
   };
-  //
+
   const getUser = async (username) => {
     setLoading(true);
-    const res = await fetch(
-      `https://jsonplaceholder.typicode.com/users?username=${username}`
-    );
-    const data = await res.json();
-    setLoading(false);
-    return data[0];
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/users?username=${username}`
+      );
+      const data = await res.json();
+      setLoading(false);
+      return data[0];
+    }
+    catch (e) {
+      console.log(e);
+      setTimeout(3000, alert('Please Check Your Internet Connection'))
+      setTimeout(3000, window.location.reload());
+    }
+
   };
 
   const validateUser = async (user) => {
+    console.log("user: ", user);
     if (!user) return "User not found";
     console.log(user?.address?.geo?.lat);
     console.log(userInput.password);
     if (user?.address?.geo?.lat !== userInput.password) return "Wrong password";
-    // setUserId(user.id)
-    localStorage.setItem('userId', user.id)
-    setCookie('userId', user.id, 1);
+    localStorage.setItem("userId", user.id);
+    setUserNum(user.id);
+    setCookie("userId", user.id, 1);
+    
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = window.history.go(1);
     navigate(`/`);
   };
 
   return (
     <>
-    <link rel="stylesheet" href="./style/signin.css" />
-
       <div className="wrapper">
         <div className="container main">
           <div className="row">
@@ -58,14 +67,14 @@ const Login = () => {
               </div>
             </div>
 
-            <form className={loading===false?"col-md-6 right":'col-md-6 input-loading'} onSubmit={handleSubmit}>
+            <form className={loading === false ? "col-md-6 right" : 'col-md-6 input-loading'} onSubmit={handleSubmit}>
               <div className="input-box">
                 <header>Log In</header>
                 <div className="input-field">
                   <input
                     type="text"
                     name="username"
-                    className={loading===false?"input":'input wait'}
+                    className={loading === false ? "input" : 'input wait'}
                     id="username"
                     onChange={handleChange}
                     value={userInput.username}
@@ -77,7 +86,7 @@ const Login = () => {
                   <input
                     type="password"
                     name="password"
-                    className={loading===false?"input":'input wait'}
+                    className={loading === false ? "input" : 'input wait'}
                     id="password"
                     onChange={handleChange}
                     value={userInput.password}
@@ -86,7 +95,7 @@ const Login = () => {
                   <label htmlFor="password">Password</label>
                 </div>
                 <div className="input-field">
-                  <input type="submit" className={loading===false?"submit":'loading'} value={loading===false?"Login":'Loading...'} />
+                  <input type="submit" className={loading === false ? "submit" : 'loading'} value={loading === false ? "Login" : 'Loading...'} />
                 </div>
               </div>
             </form>
