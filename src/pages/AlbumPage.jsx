@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
@@ -7,14 +7,21 @@ import { useStateRef } from "../hooks/useStateRef";
 function AlbumPage() {
   const { albumId } = useParams();
   const [album, setAlbum] = useState([]);
+  const albumRef = useRef([]);
   const [picId, setPicId, picRef] = useStateRef((albumId - 1) * 50 + 1);
 
   useEffect(() => {
+    // const localAlbum = JSON.parse(localStorage.getItem('Album' + albumId));
+    // console.log('localAlbum.length', localAlbum.length)
+    // if(localAlbum.length > 0){
+    //   console.log('ssss', localAlbum.length)
+    //   picRef.current = localAlbum.length;
+    // }
     getPics();
     return(
       () => {
         console.log(album)
-        localStorage.setItem('Album' + albumId, JSON.stringify(album))}
+        localStorage.setItem('Album' + albumId, JSON.stringify(albumRef.current))}
     )
   }, []);
 
@@ -35,6 +42,7 @@ function AlbumPage() {
         //Increment the picture id counter by 1.
         await setPicId(picRef.current + 1);
         setAlbum((prevPics) => [...prevPics, pic]);
+        albumRef.current.push(pic) ;
       } catch (e) {
         console.log(e);
       }

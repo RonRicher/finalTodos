@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import { useNavigate, useNavigation, useParams } from "react-router-dom";
 import { usePost } from "../context/PostContext";
-import { getCookie } from "../js/cookie";
+
 
 function Comments() {
   const { postObj } = usePost();
@@ -21,7 +21,6 @@ function Comments() {
           `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
         );
         if (!res.ok) throw new Error(res.message);
-
         const data = await res.json();
         setComments(data);
       } catch (e) {
