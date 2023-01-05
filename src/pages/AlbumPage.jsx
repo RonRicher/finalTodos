@@ -6,63 +6,37 @@ import { useStateRef } from "../hooks/useStateRef";
 
 function AlbumPage({ albumTitle }) {
   const { albumId } = useParams();
-  // const [album, setAlbum] = useState([]);
+  const [album, setAlbum] = useState([]);
+  const [picId, setPicId, picRef] = useStateRef((albumId - 1) * 50 + 1);
 
-  const [picId, setPicId, picIdRef] = useStateRef((albumId - 1) * 50 + 1);
-  const [album, setAlbum, albumRef] = useStateRef(null);
-
-  const getPics = async (counter = 4) => {
+  const getPics = async (counter = 8) => {
     const limit = 50 * albumId;
+    console.log("getPics() ", picRef.current);
 
-    //Fetch 8 requests by default(counter argument).
-    for (let i = 0; i < counter && picIdRef.current <= limit; i++) {
+    //Fetch 8 requests by default.
+    for (let i = 0; i < counter && picRef.current <= limit; i++) {
       try {
-        const response = await fetch(
-          `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}&id=${picIdRef.current}`
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}&id=${picRef.current}`
         );
 
-        //Check if the response is json type object.
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = isJson ? await response.json() : null;
+        if (!res.ok) throw new Error(res.message);
 
-        // check for error response
-        if (!response.ok) {
-          // get error message from body or default to response status
-          const error = (data && data.message) || response.status;
-          throw new Error(error);
-        }
-
+        const data = await res.json();
         const pic = await data[0];
 
         console.log(data[0]);
         //Increment the picture id counter by 1.
-        await setPicId(picIdRef.current + 1);
-        console.log("albumRef.current ", albumRef.current);
-        setAlbum(pic);
+        await setPicId(picRef.current + 1);
+        setAlbum((prevPics) => [...prevPics, pic]);
       } catch (e) {
-        console.log("There was an error! ", e);
+        console.log(e);
       }
     }
   };
 
   useEffect(() => {
     getPics();
-
-    //Retrieve album from local storage.
-    const lsAlbum = JSON.parse(localStorage.getItem("album" + albumId));
-    const pId = JSON.parse(localStorage.getItem("picId" + albumId));
-    if (lsAlbum?.length && pId) {
-      setAlbum(lsAlbum);
-      setPicId(pId);
-    }
-
-    return () => {
-      //Save album to local storage.
-      localStorage.setItem("album" + albumId, JSON.stringify(albumRef.current));
-      localStorage.setItem("picId" + albumId, JSON.stringify(picIdRef.current));
-    };
   }, []);
 
   return (
