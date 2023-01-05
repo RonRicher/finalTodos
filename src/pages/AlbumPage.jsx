@@ -36,6 +36,17 @@ function AlbumPage({ albumTitle }) {
 
   useEffect(() => {
     getPics();
+
+    //Retrieve album from local storage.
+    const lsAlbum = JSON.parse(localStorage.getItem("album"));
+    if (lsAlbum) {
+      setAlbum(lsAlbum);
+    }
+
+    return () => {
+      //Save album to local storage.
+      localStorage.setItem("album", JSON.stringify(album));
+    };
   }, []);
 
   return (
