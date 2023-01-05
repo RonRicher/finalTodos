@@ -19,6 +19,10 @@ function Todos() {
     };
   }, []);
 
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   const getTodos = async () => {
     try {
       if (!todos) {
@@ -101,7 +105,12 @@ function Todos() {
                 key={todo.id}
               >
                 {todo.title}
-                <span className="bx bx-x-circle"></span>
+                <span
+                  onClick={() => {
+                    deleteTodo(todo.id);
+                  }}
+                  className="bx bx-x-circle"
+                ></span>
               </div>
             );
           } else {
