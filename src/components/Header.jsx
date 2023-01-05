@@ -31,7 +31,7 @@ function Header() {
               <Route path="Posts" element={<Posts />} />
                 <Route path="Posts/:id" element={<Comments />} />
               <Route path="Albums" element={<Albums />} />
-              <Route path="Albums/:id" element={<AlbumPage />} />
+              <Route path="Albums/:AlbumId" element={<AlbumPage />} />
             </Route>
           </Routes>
         </>

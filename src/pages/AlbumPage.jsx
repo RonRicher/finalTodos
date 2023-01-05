@@ -3,30 +3,37 @@ import { useParams } from "react-router-dom";
 import { getCookie } from "../js/cookie";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import { useStateRef } from "../hooks/useStateRef";
+import { searchPexels } from "../js/pexels";
 
 function AlbumPage({ albumTitle }) {
-  const [album, setAlbum] = useState(null);
-  const userId = getCookie("userId");
-  const { id } = useParams();
+  const { AlbumId } = useParams();
+  const [album, setAlbum] = useState([]);
+  const [picId, setPicId, picRef] = useStateRef((AlbumId - 1) * 50 + 1);
 
-  const getAlbum = async () => {
-    console.log("album id: ", id);
-    console.log("Album: ", album);
+  const getPicture = async (counter = 8) => {
+    const limit = 50 * AlbumId;
 
-    if (!album) {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/photos?albumId=${id}`
-      );
-      const data = await res.json();
-      setAlbum(data);
-      console.log("getAlbum() ", data);
+    for (let i = 0; i < counter && picRef.current <= limit; i++) {
+      try {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/photos?albumId=${AlbumId}&id=${picRef.current}`
+        );
+        const data = await res.json();
+        const pic = await data[0];
 
-      return data;
+        console.log(data[0]);
+        //Add 1 to the picture id counter.
+        await setPicId(picRef.current + 1);
+        setAlbum((prevAlbum) => [...prevAlbum, pic]);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   useEffect(() => {
-    getAlbum();
+    getPicture();
   }, []);
 
   return (
@@ -34,10 +41,16 @@ function AlbumPage({ albumTitle }) {
       <div className="main-content">
         <h1>{albumTitle}</h1>
         <Splide
+          onDrag={() => {
+            getPicture();
+          }}
+          onMoved={() => {
+            getPicture(4);
+          }}
           aria-labelledby="carousel-heading"
           options={{
             perPage: 4,
-            arrows: false,
+            arrows: true,
             pagination: false,
             drag: "free",
             gap: "5rem",
@@ -45,7 +58,10 @@ function AlbumPage({ albumTitle }) {
         >
           {album &&
             album.map((pic) => (
-              <SplideSlide className="splide-item">
+              <SplideSlide
+                key={Math.random() * Number.MAX_SAFE_INTEGER}
+                className="splide-item"
+              >
                 <img
                   key={Math.random()}
                   className="album-pic"

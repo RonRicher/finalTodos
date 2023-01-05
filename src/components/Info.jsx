@@ -1,14 +1,11 @@
 import React, { Component, useEffect, useState } from "react";
 import { getCookie } from "../js/cookie";
-import { searchPexels } from "../js/pexels";
 
 function Info() {
   let userId = getCookie("userId");
 
-
   const [user, setUser] = useState({});
-  const [className, setClassName] = useState('active');
-  const profilePic = searchPexels();
+  const [className, setClassName] = useState("active");
   window.user = user;
 
   useEffect(() => {
@@ -25,10 +22,10 @@ function Info() {
   };
 
   return (
-    <div className='main-content'>
-      <div className='info'>
-        <div className='inside-info'>
-          <h1 >id: {user?.id}</h1>
+    <div className="main-content">
+      <div className="info">
+        <div className="inside-info">
+          <h1>id: {user?.id}</h1>
           <h2>name: {user?.name}</h2>
           <h2>username: {user?.username}</h2>
           <h2>email: {user?.email}</h2>
