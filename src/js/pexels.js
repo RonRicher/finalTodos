@@ -7,7 +7,7 @@ const query = "profile";
 
 export const searchPexels = async (callback) => {
   try {
-    const { photos } = await client.photos.search({ query, per_page: 10 });
+    const { photos } = await client.photos.search({ query, per_page: 1 });
 
     console.log("PEXELS ", photos);
 

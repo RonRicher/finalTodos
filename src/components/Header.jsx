@@ -19,7 +19,7 @@ function Header() {
     const {userNum} = useUser()
   return (
     <>
-      {(userId && userNum) ? (
+      {(userId || userNum) ? (
         <>
           <NavBar />
           <Routes>

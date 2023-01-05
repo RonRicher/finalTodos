@@ -31,7 +31,7 @@ function Posts() {
           <>
 
           <NavLink key={post.id} to={`${post.id}`}>
-              <Post title={post.title} body={post.body} postId={post.id}/>
+              <Post key={index} title={post.title} body={post.body} postId={post.id}/>
             </NavLink>
           </>
         ))}

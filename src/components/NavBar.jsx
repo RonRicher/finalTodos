@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { deleteCookie, getCookie } from "../js/cookie";
-import { motion } from "framer-motion";
 
 function NavBar() {
   const [userId, setUserId] = useState("");
-  const navigate = useNavigate();
   const {setUserNum, userNum} = useUser();
 
 
@@ -14,11 +12,9 @@ function NavBar() {
     setUserId(getCookie("userId"));
   });
 
-  function deleteUserId() {
+  function logOut() {
     deleteCookie("userId");
     setUserNum("");
-    
-
   }
 
   return (
@@ -32,7 +28,7 @@ function NavBar() {
       {!userId && !userNum ? (
         <NavLink to="/Login">LogIn</NavLink>
       ) : (
-        <NavLink onClick={deleteUserId} id="logOutButton" to="/">
+        <NavLink onClick={logOut} id="logOutButton" to="/">
           Logout
         </NavLink>
       )}

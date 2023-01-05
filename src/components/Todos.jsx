@@ -5,11 +5,10 @@ import { getCookie } from "../js/cookie";
 
 function Todos() {
     const [todos, setTodos, todosRef] = useStateRef(null);
-    
     const userId = getCookie('userId');
 
-
     useEffect(() => {
+        window.onbeforeunload = toLocalStorage;
         const localTodos = localStorage.getItem('todos');
         if (localTodos) {
             setTodos(JSON.parse(localTodos));
@@ -18,16 +17,28 @@ function Todos() {
             getTodos()
         }
         return () => {
-            localStorage.setItem('todos', JSON.stringify(todosRef.current))
+            toLocalStorage();
+
         }
     }, [])
 
+
     const getTodos = async () => {
-        if (!todos) {
-            const res = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`);
-            const data = await res.json();
-            setTodos(data)
+        try {
+            if (!todos) {
+                console.log('working')
+                const res = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`);
+                const data = await res.json();
+                setTodos(data)
+            }
         }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    function toLocalStorage() {
+        localStorage.setItem('todos', JSON.stringify(todosRef.current));
     }
 
     function changeClassName(e) {
@@ -35,6 +46,23 @@ function Todos() {
         todosArr[e.target.id].completed === true ? todosArr[e.target.id].completed = false : todosArr[e.target.id].completed = true;
         setTodos(todosArr);
 
+    }
+
+    function sortByCompleted() {
+        const todosArr = [...todos];
+        todosArr.sort((a, b) => {
+            if (a.completed) {
+                return 1;
+            }
+            return -1;
+        })
+        setTodos(todosArr);
+    }
+
+    function sortById() {
+        const todosArr = [...todos];
+        todosArr.sort((a, b) => a.id - b.id);
+        setTodos(todosArr);
     }
 
     function sortByAB() {
@@ -45,14 +73,17 @@ function Todos() {
 
     function randomSort() {
         const todosArr = [...todos];
-        todosArr.sort((a, b) => a.title.localeCompare(b.title));
+        todosArr.sort(() => 0.5 - Math.random());
         setTodos(todosArr);
     }
 
     return (
         <div className='main-content'>
             <h1>Todos</h1>
-            <button onClick={sortByAB}>sort by AB</button>
+            <button className='sortButton' onClick={sortByAB}>sort by AB</button>
+            <button className='sortButton' onClick={randomSort}>sort randomly</button>
+            <button className='sortButton' onClick={sortByCompleted}>sort by completed</button>
+            <button className='sortButton' onClick={sortById}>sort by id</button>
             {todos && todos.map((todo, index) => {
 
                 if (todo.completed) {
