@@ -7,29 +7,39 @@ import NavBar from "./NavBar";
 import Posts from "./Posts";
 import Todos from "./Todos";
 import AlbumPage from "../pages/AlbumPage";
+import { getCookie } from "../js/cookie";
+import Post from "./Post";
+import Comments from "../pages/CommentsPage";
+import Home from "./Home";
 
 
 function Header() {
+
+    const userId = getCookie('userId');
+    const {userNum} = useUser()
   return (
     <>
-      {true ? (
+      {(userId && userNum) ? (
         <>
           <NavBar />
           <Routes>
-            <Route path="/" element={<h1>Home</h1>} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path={`users/:id/`}>
               <Route path="Info" element={<Info />} />
               <Route path="Todos" element={<Todos />} />
               <Route path="Posts" element={<Posts />} />
+                <Route path="Posts/:id" element={<Comments />} />
               <Route path="Albums" element={<Albums />} />
               <Route path="Albums/:id" element={<AlbumPage />} />
             </Route>
           </Routes>
         </>
       ) : (
-        <>
-          <h1>dddddddd</h1>
+        <> 
+                <Routes>
+            <Route path="*" element={<Login />} />
+            </Routes>
         </>
       )}
     </>

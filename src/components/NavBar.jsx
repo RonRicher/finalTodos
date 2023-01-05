@@ -7,15 +7,18 @@ import { motion } from "framer-motion";
 function NavBar() {
   const [userId, setUserId] = useState("");
   const navigate = useNavigate();
+  const {setUserNum, userNum} = useUser();
+
+
   useEffect(() => {
     setUserId(getCookie("userId"));
   });
 
   function deleteUserId() {
     deleteCookie("userId");
-    setUserId("");
-    // navigate('/')
-    // window.location.reload();
+    setUserNum("");
+    
+
   }
 
   return (
@@ -26,7 +29,7 @@ function NavBar() {
         <NavLink to={`users/${userId}/Posts`}>Posts</NavLink>
         <NavLink to={`users/${userId}/Albums`}>Albums</NavLink>
       </div>
-      {!userId ? (
+      {!userId && !userNum ? (
         <NavLink to="/Login">LogIn</NavLink>
       ) : (
         <NavLink onClick={deleteUserId} id="logOutButton" to="/">

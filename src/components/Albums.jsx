@@ -11,16 +11,12 @@ function Albums() {
 
   const getAlbums = async () => {
     if (!albums) {
-      try {
-        const res = await fetch(
-          `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
-        );
-        const data = await res.json();
-        console.log(data);
-        setAlbums(data);
-      } catch (e) {
-        console.log(e);
-      }
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
+      );
+      const data = await res.json();
+      setAlbums(data);
+      return data;
     }
   };
 

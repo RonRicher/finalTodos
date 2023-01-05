@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { getCookie } from "../js/cookie";
 import { searchPexels } from "../js/pexels";
 
-function Info() {
+function Home() {
   let userId = getCookie("userId");
 
 
@@ -41,4 +41,4 @@ function Info() {
   );
 }
 
-export default Info;
+export default Home;
