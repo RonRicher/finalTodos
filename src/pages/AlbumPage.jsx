@@ -9,6 +9,15 @@ function AlbumPage() {
   const [album, setAlbum] = useState([]);
   const [picId, setPicId, picRef] = useStateRef((albumId - 1) * 50 + 1);
 
+  useEffect(() => {
+    getPics();
+    return(
+      () => {
+        console.log(album)
+        localStorage.setItem('Album' + albumId, JSON.stringify(album))}
+    )
+  }, []);
+
   const getPics = async (counter = 8) => {
     const limit = 50 * albumId;
     console.log("getPics() ", picRef.current);
@@ -32,18 +41,16 @@ function AlbumPage() {
     }
   };
 
-  useEffect(() => {
-    getPics();
-  }, []);
+
 
   return (
     <>
       <div className="main-content">
         <h1>Album {albumId}</h1>
         <Splide className="splide"
-          onDrag={() => {
-            getPics(4);
-          }}
+          // onDrag={() => {
+          //   getPics(4);
+          // }}
           onMoved={() => {
             getPics(4);
           }}
