@@ -2,19 +2,19 @@
   font-family: "Poppins", sans-serif;
 }
 
-.wrapper {
+.login-wrapper {
   background-color: #ececec;
   padding: 0 20px;
 }
 
-.main {
+.login-wrapper .main {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-.row {
+.login-wrapper .row {
   width: 900px;
   height: 550px;
   border-radius: 10px;
@@ -22,13 +22,13 @@
   box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
-.signin-image {
-  background-image: url("../img/signinBg.jpg");
+.login-wrapper .signin-image {
+  background-image: url("../img/bg1.jpg");
   background-position: center;
   background-size: cover;
 }
 
-.side-image-signin {
+.login-wrapper .side-image-signin {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -36,44 +36,44 @@
   border-radius: 10px 0 0 10px;
 }
 
-.text {
+.login-wrapper .text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.text p {
+.login-wrapper .text p {
   color: #fff;
   font-size: 18px;
 }
 
-.right {
+.login-wrapper .right {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
-.input-box {
+.login-wrapper .input-box {
   width: 330px;
   box-sizing: border-box;
 }
 
-.input-box header {
+.login-wrapper .input-box header {
   font-weight: 700;
   text-align: center;
   margin-bottom: 45px;
 }
 
-.input-field {
+.login-wrapper .input-field {
   display: flex;
   flex-direction: column;
   position: relative;
   padding: 0 10px;
 }
 
-.input-loading {
+.login-wrapper .input-loading {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +81,7 @@
   cursor: wait;
 }
 
-.input {
+.login-wrapper .input {
   height: 45px;
   width: 100%;
   background: transparent;
@@ -92,7 +92,7 @@
   color: #40414a;
 }
 
-.input-box .input-field label {
+.login-wrapper .input-box .input-field label {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -100,23 +100,23 @@
   transition: 0.5s;
 }
 
-.input-field .input:focus ~ label {
+.login-wrapper .input-field .input:focus ~ label {
   top: -10px;
   font-size: 13px;
 }
 
-.input-field .input:valid ~ label {
+.login-wrapper .input-field .input:valid ~ label {
   top: -10px;
   font-size: 13px;
   color: #5d5076;
 }
 
-.input-field .input:focus,
-.input-field .input:valid {
+.login-wrapper .input-field .input:focus,
+.login-wrapper .input-field .input:valid {
   border-bottom: 1px solid #743ae1;
 }
 
-.submit {
+.login-wrapper .submit {
   border: none;
   outline: none;
   height: 45px;
@@ -126,7 +126,7 @@
   cursor: help;
 }
 
-.loading {
+.login-wrapper .loading {
   border: none;
   outline: none;
   height: 45px;
@@ -136,59 +136,59 @@
   cursor: help;
 }
 
-.loading:hover {
+.login-wrapper .loading:hover {
   cursor: wait;
 }
 
-.wait {
+.login-wrapper .wait {
   cursor: wait;
 }
 
-.submit:hover {
+.login-wrapper .submit:hover {
   background-color: rgba(37, 95, 156, 0.9);
   color: #fff;
 }
 
-.signin {
+.login-wrapper .signin {
   text-align: center;
   font-size: small;
   margin-top: 25px;
 }
 
-span a {
+.login-wrapper span a {
   text-decoration: none;
   font-weight: 700;
   color: #000;
   transition: 0.5s;
 }
 
-span a:hover {
+.login-wrapper span a:hover {
   text-decoration: underline;
   color: #000;
 }
 
 @media only screen and (max-width: 768px) {
-  .side-image {
+  .login-wrapper .side-image {
     border-radius: 10px 10px 0 0;
   }
-  img {
+  .login-wrapper img {
     width: 35px;
     position: absolute;
     top: 20px;
     left: 47%;
   }
 
-  .text {
+  .login-wrapper .text {
     position: absolute;
     top: 70%;
     text-align: center;
   }
 
-  .text p {
+  .login-wrapper .text p {
     font-size: 17px;
   }
 
-  .row {
+  .login-wrapper .row {
     max-width: 420px;
     width: 100%;
   }

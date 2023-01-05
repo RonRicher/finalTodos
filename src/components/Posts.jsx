@@ -12,6 +12,8 @@ function Posts() {
       const res = await fetch(
         `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
       );
+      if (!res.ok) throw new Error(res.message);
+
       const data = await res.json();
       setPosts(data);
       return data;

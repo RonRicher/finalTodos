@@ -16,6 +16,8 @@ function Info() {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/users/${userId}`
     );
+    if (!res.ok) throw new Error(res.message);
+
     const data = await res.json();
     setUser(data);
     return data;

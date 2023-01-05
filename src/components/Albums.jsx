@@ -13,6 +13,8 @@ function Albums() {
       const res = await fetch(
         `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
       );
+      if (!res.ok) throw new Error(res.message);
+
       const data = await res.json();
       setAlbums(data);
       return data;

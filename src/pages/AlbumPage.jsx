@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCookie } from "../js/cookie";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { useStateRef } from "../hooks/useStateRef";
-import { searchPexels } from "../js/pexels";
 
 function AlbumPage({ albumTitle }) {
   const { AlbumId } = useParams();
   const [album, setAlbum] = useState([]);
   const [picId, setPicId, picRef] = useStateRef((AlbumId - 1) * 50 + 1);
 
-  const getPicture = async (counter = 8) => {
+  const getPics = async (counter = 4) => {
     const limit = 50 * AlbumId;
 
+    //Fetch 8 requests by default.
     for (let i = 0; i < counter && picRef.current <= limit; i++) {
       try {
         const res = await fetch(
           `https://jsonplaceholder.typicode.com/photos?albumId=${AlbumId}&id=${picRef.current}`
         );
+
+        if (!res.ok) throw new Error(res.message);
+
         const data = await res.json();
         const pic = await data[0];
 
         console.log(data[0]);
-        //Add 1 to the picture id counter.
+        //Increment the picture id counter by 1.
         await setPicId(picRef.current + 1);
-        setAlbum((prevAlbum) => [...prevAlbum, pic]);
+        setAlbum((prevPics) => [...prevPics, pic]);
       } catch (e) {
         console.log(e);
       }
@@ -33,7 +35,7 @@ function AlbumPage({ albumTitle }) {
   };
 
   useEffect(() => {
-    getPicture();
+    getPics();
   }, []);
 
   return (
@@ -42,10 +44,10 @@ function AlbumPage({ albumTitle }) {
         <h1>{albumTitle}</h1>
         <Splide
           onDrag={() => {
-            getPicture();
+            getPics(4);
           }}
           onMoved={() => {
-            getPicture(4);
+            getPics(4);
           }}
           aria-labelledby="carousel-heading"
           options={{
