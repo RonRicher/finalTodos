@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useRef, useState } from "react";
 import { useStateRef } from "../hooks/useStateRef";
 import { getCookie } from "../js/cookie";
+import { setLocalStorage } from "../js/localsessionStorage";
 
 function Todos() {
   const [todos, setTodos, todosRef] = useStateRef(null);
@@ -35,7 +36,7 @@ function Todos() {
   };
 
   function toLocalStorage() {
-    localStorage.setItem("todos", JSON.stringify(todosRef.current));
+    setLocalStorage("todos", JSON.stringify(todosRef.current));
   }
 
   const deleteTodo = async (id) => {
