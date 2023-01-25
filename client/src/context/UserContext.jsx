@@ -8,6 +8,7 @@ export default function UserProvider({ children }) {
   const [userNum, setUserNum] = useState(null);
 
   useEffect(() => {
+    // const userId = localStorage.getItem('userId');
         if (!userNum) {
             localStorage.clear();      
     }
