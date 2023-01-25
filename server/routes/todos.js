@@ -10,13 +10,20 @@ var con = require('../connection');
 /* GET todos listing. */
 router.get('/showTodos/:userId', function (req, res, next) {
     const { userId } = req.params;
-    con.query(`SELECT * FROM todo Where user_id = ${userId}`, function (err, result, fields) {
+    console.log('userId: ', userId);
+    con.query(`SELECT * FROM todo Where user_id = ${userId} AND deleted=0`, function (err, result, fields) {
         if (err) throw err;
         console.log(result);
+        let data = [];
+        result.forEach(todo => {
+            data.push({ id: todo.todo_id, title: todo.description, completed: todo.finished });
+        });
+        console.log(data);
+        res.send(JSON.stringify(data));
     });
 });
 
-router.put('/changeTodo', function (req, res, next) {
+router.put('/changeTodoStatus', function (req, res, next) {
     const { todoId, isDone } = req.body;
     con.query(`UPDATE todo SET finished = ${isDone} WHERE todo_id = ${todoId};`,
         function (err, result, fields) {
@@ -38,10 +45,10 @@ router.post('/postTodo', function (req, res, next) {
 });
 
 
-router.delete('/deleteTodo', function (req, res, next) {
+router.put('/deleteTodo', function (req, res, next) {
     const { todoId } = req.body;
     if (err) throw err;
-    var sql = `DELETE FROM todo WHERE todo_id = ${todoId}`;
+    var sql = `UPDATE todo SET deleted = 1 WHERE todo_id = ${todoId}`;
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Number of records deleted: " + result.affectedRows);

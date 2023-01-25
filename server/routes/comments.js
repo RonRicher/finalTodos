@@ -10,10 +10,9 @@ var con = require('../connection');
 /* GET todos listing. */
 router.get('/showComments/:postId', function (req, res, next) {
     const { postId } = req.params;
-    if (err) throw err;
-    con.query(`SELECT * FROM comment Where post_id = ${postId}`, function (err, result, fields) {
+    con.query(`SELECT ui.first_name, c.description FROM comment c JOIN user_info ui USING(user_id) WHERE post_id = ${postId}`, function (err, result, fields) {
         if (err) throw err;
-        console.log(result[0]);
+        console.log(result);
     });
 });
 
@@ -32,7 +31,6 @@ router.get('/showComments/:postId', function (req, res, next) {
 
 router.post('/addComment', function (req, res, next) {
     const { postId, description } = req.body;
-
     if (err) throw err;
     console.log("Connected!");
     var sql = `INSERT INTO comment (user_id, post_id, description, deleted) VALUES (${userId}, ${JSON.stringify(description)}, 0)`;

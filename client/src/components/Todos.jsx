@@ -17,6 +17,7 @@ function Todos() {
     }
     return () => {
       toLocalStorage();
+
     };
   }, []);
 
@@ -25,9 +26,12 @@ function Todos() {
       if (!todos) {
         console.log("working");
         const res = await fetch(
-          `https://jsonplaceholder.typicode.com/todos?userId=${userId}`
+          `http://localhost:8080/todos/showTodos/${userId}`
         );
+
         const data = await res.json();
+
+        console.log(data);
         setTodos(data);
       }
     } catch (e) {
@@ -35,20 +39,23 @@ function Todos() {
     }
   };
 
-  function toLocalStorage() {
-    setLocalStorage("todos", JSON.stringify(todosRef.current));
-  }
-
-  const deleteTodo = async (id) => {
+  const changeTodoStatus = async (todoId, isDone) => {
     try {
       const res = await fetch(
-        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        `http://localhost:8080/todos/changeTodoStatus`,
         {
-          method: "DELETE",
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            todoId: todoId,
+            isDone: isDone
+          })
         }
       );
       if (res.ok) {
-        setTodos(todos.filter((todo) => todo.id !== id));
+        setTodos(todos.filter((todo) => todo.id !== todoId));
       } else {
         throw new Error(res.message);
       }
@@ -58,12 +65,49 @@ function Todos() {
     }
   };
 
-  function changeClassName(e) {
+
+
+  function toLocalStorage() {
+    setLocalStorage("todos", todosRef.current);
+  }
+
+  const deleteTodo = async (todoId) => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/todos/deleteTodo`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            todoId: todoId
+          })
+        }
+      );
+      if (res.ok) {
+        setTodos(todos.filter((todo) => todo.id !== todoId));
+      } else {
+        throw new Error(res.message);
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  function changeStatusDone(e) {
     const todosArr = [...todos];
-    if (todos[e.target.id]) {
-      todosArr[e.target.id].completed === true
-        ? (todosArr[e.target.id].completed = false)
-        : (todosArr[e.target.id].completed = true);
+    const todoId = e.target.id;
+    if (todos[todoId]) {
+      if (todosArr[todoId].completed === 1) {
+        changeTodoStatus(todoId, 0);
+        todosArr[todoId].completed = 0;
+      }
+      else {
+        changeTodoStatus(todoId, 1);
+        (todosArr[todoId].completed = 1);
+      }
       setTodos(todosArr);
     }
   }
@@ -72,10 +116,11 @@ function Todos() {
     const todosArr = [...todos];
     todosArr.sort((a, b) => {
       if (a.completed) {
-        return 1;
+        return -1;
       }
-      return -1;
+      return 1;
     });
+    console.log(todosArr);
     setTodos(todosArr);
   }
 
@@ -88,6 +133,7 @@ function Todos() {
   function sortByAB() {
     const todosArr = [...todos];
     todosArr.sort((a, b) => a.title.localeCompare(b.title));
+
     setTodos(todosArr);
   }
 
@@ -118,7 +164,7 @@ function Todos() {
             return (
               <div
                 id={index}
-                onClick={changeClassName}
+                onClick={changeStatusDone}
                 className="todo-completed"
                 key={todo.id}
               >
@@ -135,7 +181,7 @@ function Todos() {
             return (
               <div
                 id={index}
-                onClick={changeClassName}
+                onClick={changeStatusDone}
                 className="todo"
                 key={todo.id}
               >
