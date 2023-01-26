@@ -8,7 +8,6 @@ import Posts from "./Posts";
 import Todos from "./Todos";
 import AlbumPage from "../pages/AlbumPage";
 import { getCookie } from "../js/cookie";
-import Post from "./Post";
 import Comments from "../pages/CommentsPage";
 import Home from "./Home";
 import Register from "./registration";
@@ -38,8 +37,8 @@ function Header() {
       ) : (
         <>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} /> 
+            <Route path="*" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </>
       )}

@@ -8,8 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
-    username: "Bret",
-    password: "-37.3159",
+    username: "",
+    password: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -135,10 +135,12 @@ const Login = () => {
                     className={loading === false ? "submit" : "loading"}
                     value={loading === false ? "Login" : "Loading..."}
                   />
+                  <span>Dont have an accout yet? <a style={{ cursor: 'pointer' }} onClick={() => navigate('/register')}>Sign up</a></span>
                 </div>
                 <p id="response-text">{errorMessage}</p>
               </div>
             </form>
+
           </div>
         </div>
       </div>

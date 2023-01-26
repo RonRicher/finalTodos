@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var con = require('../connection')
+var con = require('../connection');
 
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
+
 
 router.post('/login', function (req, res, next) {
   let userExists = false;
@@ -17,17 +18,17 @@ router.post('/login', function (req, res, next) {
     for (let i = 0; i < result.length; i++) {
       console.log("Entered for loop", result[i]["username"], req.body.username);
       if (result[i]["username"] === req.body.username && result[i]["password"] === req.body.password) {
-        console.log("This user exists!")
+        console.log("This user exists!");
         userExists = true;
-        let response = JSON.stringify({ userExists: userExists, user_id: result[i]["user_id"] })
+        let response = JSON.stringify({ userExists: userExists, user_id: result[i]["user_id"] });
         console.log(response);
-        res.send(response)
-        return
+        res.send(response);
+        return;
       }
-    } 
-      console.log('user does not exist');
-      res.send(userExists);
-  })
+    }
+    console.log('user does not exist');
+    res.send(userExists);
+  });
 });
 
 router.post('/registration', function (req, res, next) {
@@ -50,9 +51,9 @@ router.post('/registration', function (req, res, next) {
       });
       res.send(true);
     } else {
-      res.send(false)
+      res.send(false);
     }
-  })
+  });
 });
 
 

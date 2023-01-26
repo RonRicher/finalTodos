@@ -36,14 +36,14 @@ router.get('/showPosts/:userId', function (req, res, next) {
 
 router.post('/addPost', function (req, res, next) {
     const { userId, description } = req.body;
-
-    if (err) throw err;
     console.log("Connected!");
     var sql = `INSERT INTO post (user_id, description, deleted) VALUES (${userId}, ${JSON.stringify(description)}, 0)`;
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
+        res.send('');
     });
+
 });
 
 

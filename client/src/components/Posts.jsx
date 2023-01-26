@@ -37,27 +37,32 @@ function Posts() {
   }
 
   return (
-    <div className="main-content">
-      <h1 style={{ marginTop: 50 }}>Posts</h1>
+    <div style={{ position: 'relative' }}>
+      <div className="main-content">
+        <div style={postBlock ? { opacity: 0.3, backgroundColor: 'gray' } : {}}>
+          <h1 style={{ marginTop: 50 }}>Posts</h1>
 
-      {posts &&
-        posts.map((post, index) => (
-          <NavLink
-            onClick={() => changeContext(index)}
-            key={post.id}
-            to={`${post.id}`}
-          >
-            <Post
-              key={index}
-              title={post.title}
-              // body={post.body}
-              postId={post.id}
-            />
-          </NavLink>
-        ))}
-      <span>Add a new Post! <a onClick={() => setPostBlock(true)}>Sign up</a></span>
-
-      <div id="postBlock" style={postBlock ? { display: "block" } : { display: "none" }}> <PostBlock setPostBlock={setPostBlock} /></div>
+          {posts &&
+            posts.map((post, index) => (
+              <NavLink
+                onClick={() => changeContext(index)}
+                key={post.id}
+                to={`${post.id}`}
+              >
+                <Post
+                  key={index}
+                  title={post.title}
+                  // body={post.body}
+                  postId={post.id}
+                />
+              </NavLink>
+            ))}
+        </div>
+      </div>
+      <div style={{ position: 'absolute', top: '15%', left: '42%' }}>
+        <button style={postBlock ? { display: 'none' } : {}} onClick={() => setPostBlock(true)}>Add A new Post</button>
+        <div id="postBlock" style={postBlock ? { display: "block" } : { display: "none" }}> <PostBlock setPosts={setPosts} setPostBlock={setPostBlock} /></div>
+      </div>
     </div>
   );
 }
