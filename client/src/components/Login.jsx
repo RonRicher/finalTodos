@@ -24,22 +24,43 @@ const Login = () => {
     if (loading) {
       return;
     }
-    const response = await validateUser(await getUser(userInput.username));
+    const response = await validateUser(await getUser(userInput));
     console.log(response);
   };
 
-  const getUser = async (username) => {
+  // const getUser = async (username) => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await fetch(
+  //       `https://jsonplaceholder.typicode.com/users?username=${username}`
+  //     );
+
+  //     if (!res.ok) throw new Error(res.message);
+
+  //     const data = await res.json();
+  //     setLoading(false);
+  //     return data[0];
+  //   } catch (e) {
+  //     console.log(e);
+  //     setTimeout(3000, alert("Please Check Your Internet Connection"));
+  //     setTimeout(3000, window.location.reload());
+  //   }
+  // };
+
+  const getUser = async (formInput) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/users?username=${username}`
-      );
-
-      if (!res.ok) throw new Error(res.message);
-
-      const data = await res.json();
+      const res = await fetch("http://localhost:8080/users/login", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formInput.username,
+          password: formInput.password
+        })
+      });
+      let response = await res.json();
       setLoading(false);
-      return data[0];
+      return response;
     } catch (e) {
       console.log(e);
       setTimeout(3000, alert("Please Check Your Internet Connection"));
@@ -47,20 +68,21 @@ const Login = () => {
     }
   };
 
-  const validateUser = async (user) => {
-    if (!user) {
+  const validateUser = async (response) => {
+    // let response = await res.json();
+    if (!response.userExists) {
       setErrorMessage("User not found");
       return;
     }
 
-    if (user?.address?.geo?.lat !== userInput.password) {
-      setErrorMessage("Wrong password");
-      return;
-    }
+    // if (user?.address?.geo?.lat !== userInput.password) {
+    //   setErrorMessage("Wrong password");
+    //   return;
+    // }
 
-    localStorage.setItem("userId", user.id);
-    setUserNum(user.id);
-    setCookie("userId", user.id);
+    localStorage.setItem("userId", response.user_id);
+    setUserNum(response.user_id);
+    setCookie("userId", response.user_id);
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = window.history.go(1);
     navigate(`/home/${userInput.username}`);

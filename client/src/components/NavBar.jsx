@@ -23,10 +23,13 @@ function NavBar() {
         <NavLink to={`users/${userId}/Info`}>Info</NavLink>
         <NavLink to={`users/${userId}/Todos`}>Todos</NavLink>
         <NavLink to={`users/${userId}/Posts`}>Posts</NavLink>
-        <NavLink to={`users/${userId}/Albums`}>Albums</NavLink>
+        <NavLink to="/register">Register</NavLink>
       </div>
       {!userId && !userNum ? (
-        <NavLink to="/Login">LogIn</NavLink>
+        <>
+        <NavLink to="/login">LogIn</NavLink>
+        <NavLink to="/register">Register</NavLink>
+        </>
       ) : (
         <NavLink onClick={logOut} id="logOutButton" to="/">
           Logout
