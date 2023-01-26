@@ -8,12 +8,16 @@ var con = require('../connection');
 
 
 /* GET todos listing. */
-router.post('/showPosts', function (req, res, next) {
-    const { userId } = req.body;
-    if (err) throw err;
-    con.query(`SELECT * FROM post Where user_id = ${userId}`, function (err, result, fields) {
+router.get('/showPosts/:userId', function (req, res, next) {
+    const { userId } = req.params;
+    con.query(`SELECT * FROM post Where user_id = ${userId} AND deleted=0`, function (err, result, fields) {
         if (err) throw err;
         console.log(result[0]);
+        let data = [];
+        result.forEach(post => {
+            data.push({ id: post.post_id, title: post.description });
+        });
+        res.send(data);
     });
 });
 

@@ -18,7 +18,7 @@ function Comments() {
     if (!comments) {
       try {
         const res = await fetch(
-          `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
+          `http://localhost:8080/comments/showComments/${postId}`
         );
         if (!res.ok) throw new Error(res.message);
         const data = await res.json();
@@ -31,12 +31,11 @@ function Comments() {
 
   return (
     <div className="main-content">
-      <h2 style={{marginTop: 50}}>{postObj.title}</h2>
-      <p>{postObj.body}</p>
+      <h2 style={{ marginTop: 50 }}>{postObj.title}</h2>
       {comments &&
         comments.map((comment) => (
           <div className="comment" key={comment.id}>
-            <h6>{comment.name}</h6>
+            <h6>{comment.userName}</h6>
             <p>{comment.body}</p>
           </div>
         ))}

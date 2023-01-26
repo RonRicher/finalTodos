@@ -11,7 +11,7 @@ const Login = () => {
     username: "Bret",
     password: "-37.3159",
   });
-  
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = ({ target }) => {
@@ -60,7 +60,7 @@ const Login = () => {
 
     localStorage.setItem("userId", user.id);
     setUserNum(user.id);
-    setCookie("userId", user.id, 1);
+    setCookie("userId", user.id);
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = window.history.go(1);
     navigate(`/home/${userInput.username}`);

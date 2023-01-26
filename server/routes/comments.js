@@ -10,8 +10,14 @@ var con = require('../connection');
 /* GET todos listing. */
 router.get('/showComments/:postId', function (req, res, next) {
     const { postId } = req.params;
-    con.query(`SELECT ui.first_name, c.description FROM comment c JOIN user_info ui USING(user_id) WHERE post_id = ${postId}`, function (err, result, fields) {
+    con.query(`SELECT ui.first_name, c.description, c.comment_id FROM comment c JOIN user_info ui USING(user_id) WHERE post_id = ${postId}`, function (err, result, fields) {
         if (err) throw err;
+        let data = [];
+        result.forEach(comment => {
+            data.push({ id: comment.comment_id, userName: comment.first_name, body: comment.description });
+        });
+        res.send(data);
+
         console.log(result);
     });
 });
