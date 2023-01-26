@@ -61,44 +61,6 @@ const Register = () => {
         console.log(error);
     }
   }
-//   const getUser = async (username) => {
-//     setLoading(true);
-//     try {
-//       const res = await fetch(
-//         `https://jsonplaceholder.typicode.com/users?username=${username}`
-//       );
-
-//       if (!res.ok) throw new Error(res.message);
-
-//       const data = await res.json();
-//       setLoading(false);
-//       return data[0];
-//     } catch (e) {
-//       console.log(e);
-//       setTimeout(3000, alert("Please Check Your Internet Connection"));
-//       setTimeout(3000, window.location.reload());
-//     }
-//   };
-
-//   const validateUser = async (user) => {
-//     if (!user) {
-//       setErrorMessage("User not found");
-//       return;
-//     }
-
-//     if (user?.address?.geo?.lat !== userInput.password) {
-//       setErrorMessage("Wrong password");
-//       return;
-//     }
-
-//     localStorage.setItem("userId", user.id);
-//     setUserNum(user.id);
-//     setCookie("userId", user.id, 1);
-//     window.history.pushState(null, null, window.location.href);
-//     window.onpopstate = window.history.go(1);
-//     navigate(`/home/${userInput.username}`);
-//   };
-
   return (
     <>
       <div className="login-wrapper">

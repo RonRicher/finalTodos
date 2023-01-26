@@ -31,7 +31,7 @@ function NavBar() {
         <NavLink to="/register">Register</NavLink>
         </>
       ) : (
-        <NavLink onClick={logOut} id="logOutButton" to="/">
+        <NavLink onClick={logOut} id="logOutButton" to="/login">
           Logout
         </NavLink>
       )}
