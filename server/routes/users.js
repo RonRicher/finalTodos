@@ -56,6 +56,20 @@ router.post('/registration', function (req, res, next) {
   });
 });
 
+router.post('/userInfo', function (req, res, next) {
+  let userInfo;
+  var sql = `SELECT ui.first_name, ui.last_name, ui.email, ui.phone, ua.username FROM user_info ui JOIN user_access ua USING(user_id) WHERE ui.user_id = '${req.body.user_id}'`;
+  console.log(sql);
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    // console.log(result);
+    userInfo = JSON.stringify(result);
+    console.log(userInfo);
+    res.send(userInfo);
+  });
+
+});
+
 
 
 

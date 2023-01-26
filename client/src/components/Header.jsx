@@ -32,6 +32,7 @@ function Header() {
               <Route path="Albums" element={<Albums />} />
               <Route path="Albums/:albumId" element={<AlbumPage />} />
             </Route>
+            <Route path="/register" element={<Register />} />
           </Routes>
         </>
       ) : (
