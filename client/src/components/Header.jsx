@@ -11,6 +11,7 @@ import { getCookie } from "../js/cookie";
 import Post from "./Post";
 import Comments from "../pages/CommentsPage";
 import Home from "./Home";
+import Register from "./registration";
 
 function Header() {
   const userId = getCookie("userId");
@@ -37,7 +38,8 @@ function Header() {
       ) : (
         <>
           <Routes>
-            <Route path="*" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} /> 
           </Routes>
         </>
       )}
